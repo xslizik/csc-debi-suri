@@ -1,4 +1,6 @@
-apt-get update && apt-get -y upgrade
+#!/usr/bin/bash
+
+apt-get update
 apt-get install --yes software-properties-common jq wget gnupg apt-transport-https unzip
 wget -qO - https://evebox.org/files/GPG-KEY-evebox > /etc/apt/trusted.gpg.d/evebox.asc
 echo "deb http://evebox.org/files/debian stable main" > /etc/apt/sources.list.d/evebox.list
@@ -22,24 +24,32 @@ cd suricata-7.0.1
 ./configure
 make
 make install
-apt-get update
+apt-get update && apt-get -y upgrade
 apt-get install -y evebox 
 ldconfig
 
-wget https://github.com/pan-unit42/Wireshark-quizzes/raw/main/2023-01-Unit42-Wireshark-quiz.pcap.zip
-unzip -P infected 2023-01-Unit42-Wireshark-quiz.pcap.zip && rm 2023-01-Unit42-Wireshark-quiz.pcap.zip
+cd ..
 
 suricata-update update-sources
 suricata-update enable-source et/open
 suricata-update
 suricata-update list-sources --enabled
 
+## wget suricata.yaml
+wget https://github.com/xslizik/csc-debi-suri/blob/main/wget/suricata.yaml
+cp suricata.yaml /usr/local/var/lib/suricata/suricata.yaml && rm suricata.yaml
 
-## wget  suricata.yaml
-cp suricata.yaml /usr/local/var/lib/suricata/suricata.yaml
-## wget evebox_pcap.sh
 ## wget classification.config
-cp classification.config /usr/local/var/lib/suricata/classification.config
+wget https://github.com/xslizik/csc-debi-suri/blob/main/wget/classification.config
+cp classification.config /usr/local/var/lib/suricata/classification.config && rm classification.config
+
 ## wget reference.config
-cp reference.config /usr/local/var/lib/suricata/reference.config
-## wget setup ?
+wget https://github.com/xslizik/csc-debi-suri/blob/main/wget/reference.config
+cp reference.config /usr/local/var/lib/suricata/reference.config && rm reference.config
+
+## wget evebox_pcap.sh
+wget https://github.com/xslizik/csc-debi-suri/blob/main/evebox_pcap.sh
+
+## wget pcaps
+wget https://github.com/pan-unit42/Wireshark-quizzes/raw/main/2023-01-Unit42-Wireshark-quiz.pcap.zip
+unzip -P infected 2023-01-Unit42-Wireshark-quiz.pcap.zip && rm 2023-01-Unit42-Wireshark-quiz.pcap.zip
