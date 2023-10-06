@@ -1,0 +1,31 @@
+---
+- name: Add EveBox GPG key
+  apt_key:
+    url: https://evebox.org/files/GPG-KEY-evebox
+    state: present
+  tags: add_evebox_gpg_key
+
+- name: Add EveBox repository
+  apt_repository:
+    repo: deb http://evebox.org/files/debian stable main
+    state: present
+  tags: add_evebox_repo
+  
+- name: Install EveBox
+  apt:
+    name: evebox
+    state: present
+  tags: install_evebox
+
+- name: Download evebox_pcap.sh
+  get_url:
+    url: https://github.com/xslizik/csc-debi-suri/raw/main/evebox_pcap.sh
+    dest: /home/vagrant/evebox_pcap.sh
+    mode: '0755'
+  tags: download_evebox_pcap_script
+
+- name: Download pcaps
+  get_url:
+    url: https://github.com/pan-unit42/Wireshark-quizzes/raw/main/2023-01-Unit42-Wireshark-quiz.pcap.zip
+    dest: /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
+  tags: download_pcaps

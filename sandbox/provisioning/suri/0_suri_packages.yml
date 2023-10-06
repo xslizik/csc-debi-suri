@@ -1,0 +1,27 @@
+---
+- name: Update packages
+  apt:
+    update_cache: yes
+  tags: update
+
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - software-properties-common
+    - jq
+    - wget
+    - gnupg
+    - apt-transport-https
+    - unzip
+    - libpcre2-dev
+    - libyaml-dev
+    - libjansson-dev
+    - libpcap-dev
+    - gawk
+    - libunwind-dev
+    - libmagic-dev
+    - liblz4-dev
+    - libcap-ng-dev
+  tags: install_packages

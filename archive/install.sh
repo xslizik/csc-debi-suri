@@ -36,15 +36,16 @@ suricata-update
 suricata-update list-sources --enabled
 
 ## wget suricata.yaml
-wget https://github.com/xslizik/csc-debi-suri/blob/main/wget/suricata.yaml
+wget https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/suricata.yaml
 cp suricata.yaml /usr/local/var/lib/suricata/suricata.yaml && rm suricata.yaml
 
 ## wget classification.config
-wget https://github.com/xslizik/csc-debi-suri/blob/main/wget/classification.config
+
+wget https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/classification.config
 cp classification.config /usr/local/var/lib/suricata/classification.config && rm classification.config
 
 ## wget reference.config
-wget https://github.com/xslizik/csc-debi-suri/blob/main/wget/reference.config
+wget https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/reference.config
 cp reference.config /usr/local/var/lib/suricata/reference.config && rm reference.config
 
 ## wget evebox_pcap.sh

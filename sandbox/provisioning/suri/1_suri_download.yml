@@ -1,0 +1,19 @@
+---
+- name: Download Suricata source
+  get_url:
+    url: https://www.openinfosecfoundation.org/download/suricata-7.0.1.tar.gz
+    dest: /home/vagrant/suricata-7.0.1.tar.gz
+  tags: download_suricata_source
+
+- name: Extract Suricata source
+  unarchive:
+    src: /home/vagrant/suricata-7.0.1.tar.gz
+    dest: /home/vagrant/
+    remote_src: yes
+  tags: extract_suricata_source
+
+- name: Remove Suricata source
+  file:
+    path: /home/vagrant/suricata-7.0.1.tar.gz
+    state: absent
+  tags: remove_suricata_source

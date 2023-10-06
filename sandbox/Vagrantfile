@@ -9,7 +9,8 @@ ansible_groups = {
   "routers" => [], 
   "ssh" => ["home"], 
   "winrm" => [], 
-  "ansible" => ["home"]
+  "ansible" => ["home"],
+  "suri" => ["home"]
 }
 
 Vagrant.configure("2") do |config|

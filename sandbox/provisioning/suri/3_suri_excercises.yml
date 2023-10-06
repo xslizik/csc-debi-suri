@@ -1,0 +1,38 @@
+---
+- name: Download suricata.yaml
+  get_url:
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/suricata.yaml
+    dest: /usr/local/var/lib/suricata/suricata.yaml
+    validate_certs: no
+
+- name: Download classification.config
+  get_url:
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/classification.config
+    dest: /usr/local/var/lib/suricata/classification.config
+    validate_certs: no
+
+- name: Download reference.config
+  get_url:
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/reference.config
+    dest: /usr/local/var/lib/suricata/reference.config
+    validate_certs: no
+
+- name: Download evebox_pcap.sh
+  get_url:
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/evebox_pcap.sh
+    dest: /home/vagrant/evebox_pcap.sh
+    validate_certs: no
+
+- name: Download PCAP file
+  get_url:
+    url: https://github.com/pan-unit42/Wireshark-quizzes/raw/main/2023-01-Unit42-Wireshark-quiz.pcap.zip
+    dest: /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
+    validate_certs: no
+
+- name: Unzip PCAP file with password
+  command: unzip -P infected /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
+  args:
+    chdir: /home/vagrant
+  
+- name: Unzip PCAP file with password and automatically answer "yes"
+  command: yes | rm /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
