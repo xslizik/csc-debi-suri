@@ -10,7 +10,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 cd /home/vagrant/suricata-7.0.1
 ./configure && make && make install
 ldconfig
-#suricata-update update-sources
-#suricata-update enable-source et/open
-#cd ..
-#suricata-update
+suricata-update update-sources
+suricata-update enable-source et/open
+cd ..
+suricata-update
