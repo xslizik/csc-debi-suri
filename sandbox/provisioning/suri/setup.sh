@@ -12,5 +12,3 @@ cd /home/vagrant/suricata-7.0.1
 ldconfig
 suricata-update update-sources
 suricata-update enable-source et/open
-cd ..
-suricata-update
