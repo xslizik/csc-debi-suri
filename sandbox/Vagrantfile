@@ -5,19 +5,19 @@
 # vi: set ft=ruby :
 
 ansible_groups = {
-  "hosts" => ["home"], 
+  "hosts" => ["debi-suri"], 
   "routers" => [], 
-  "ssh" => ["home"], 
+  "ssh" => ["debi-suri"], 
   "winrm" => [], 
-  "ansible" => ["home"],
-  "suri" => ["home"]
+  "ansible" => ["debi-suri"],
+  "suri" => ["debi-suri"]
 }
 
 Vagrant.configure("2") do |config|
-  # Device(host): home
+  # Device(host): debi-suri
   config.vm.boot_timeout = 300000000
-  config.vm.define "home" do |device|
-    device.vm.hostname = "home"
+  config.vm.define "debi-suri" do |device|
+    device.vm.hostname = "debi-suri"
     device.vm.box = "munikypo/debian-10"
     device.vm.provider "virtualbox" do |vb|
       vb.memory = 4096
@@ -32,16 +32,15 @@ Vagrant.configure("2") do |config|
       ip: "10.10.30.5",
       netmask: "255.255.255.0"
     device.vm.provision "ansible_local" do |ansible|
-      ansible.verbose = "vvv"
       ansible.playbook = "preconfig/playbook.yml"
       ansible.groups = ansible_groups
-      ansible.limit = "home"
+      ansible.limit = "debi-suri"
     end
     device.vm.provision "ansible_local" do |ansible|
       ansible.verbose = "vvv"
       ansible.playbook = "provisioning/playbook.yml"
       ansible.groups = ansible_groups
-      ansible.limit = "home"
+      ansible.limit = "debi-suri"
     end
   end
 end

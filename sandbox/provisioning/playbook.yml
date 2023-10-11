@@ -1,6 +1,6 @@
 ---
 - name: Main playbook to install and configure Suricata with EveBox
-  hosts: all
+  hosts: debi-suri
   become: yes
   tasks:
     - name: Install packages
@@ -12,8 +12,8 @@
     - name: Add EveBox
       include_tasks: ./suri/2_suri_eve.yml
 
-    - name: Configure Suricata
-      command: ./suri/setup.sh
+    - name: Set proper Suricata permissions
+      include_tasks: ./suri/3_suri_groups.yml
 
     - name: Add Suricata excercises
-      include_tasks: ./suri/3_suri_excercises.yml
+      include_tasks: ./suri/4_suri_excercises.yml

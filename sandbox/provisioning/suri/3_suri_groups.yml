@@ -1,0 +1,46 @@
+- name: Create suricata group
+  group:
+    name: suricata
+    state: present
+
+- name: Change group owner for /usr/local/var/lib/suricata/
+  file:
+    path: "/usr/local/var/lib/suricata/"
+    owner: root
+    group: suricata
+    recurse: yes
+
+- name: Change group owner for /usr/var/lib/suricata/rules/
+  file:
+    path: "/usr/var/lib/suricata/rules/"
+    owner: root
+    group: suricata
+    recurse: yes
+
+- name: Change group owner for Suricata Update
+  file:
+    path: "/usr/var/lib/suricata/update/"
+    owner: root
+    group: suricata
+    recurse: yes
+
+- name: Set directory permissions for Suricata
+  file:
+    path: "/usr/local/var/lib/suricata/"
+    mode: "0755"
+
+- name: Set directory permissions for Suricata Rules
+  file:
+    path: "/usr/var/lib/suricata/rules/"
+    mode: "0775"
+
+- name: Set directory permissions for Suricata Update
+  file:
+    path: "/usr/var/lib/suricata/update/"
+    mode: "0775"
+
+- name: Add vagrant to suricata group
+  user:
+    name: "vagrant"
+    groups: suricata
+    append: yes

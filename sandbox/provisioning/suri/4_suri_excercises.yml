@@ -1,0 +1,23 @@
+---
+- name: Download evebox_pcap.sh
+  get_url:
+    url: https://github.com/xslizik/csc-debi-suri/raw/main/wget/evebox_pcap.sh
+    dest: /home/vagrant/evebox_pcap.sh
+    mode: '0755'
+    validate_certs: no
+
+- name: Download PCAP file
+  get_url:
+    url: https://github.com/pan-unit42/Wireshark-quizzes/raw/main/2023-01-Unit42-Wireshark-quiz.pcap.zip
+    dest: /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
+    validate_certs: no
+
+- name: Unzip PCAP file with password
+  command: unzip -P infected /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
+  args:
+    chdir: /home/vagrant
+  
+- name: Remove PCAP zip
+  ansible.builtin.file:
+    path: /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
+    state: absent

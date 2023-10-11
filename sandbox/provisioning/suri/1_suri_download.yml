@@ -1,19 +1,48 @@
 ---
-- name: Download Suricata source
+- name: Download suricata setup.sh
   get_url:
-    url: https://www.openinfosecfoundation.org/download/suricata-7.0.1.tar.gz
-    dest: /home/vagrant/suricata-7.0.1.tar.gz
-  tags: download_suricata_source
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/sandbox/provisioning/suri/wget/setup.sh
+    dest: /tmp
+    validate_certs: no
 
-- name: Extract Suricata source
-  unarchive:
-    src: /home/vagrant/suricata-7.0.1.tar.gz
-    dest: /home/vagrant/
-    remote_src: yes
-  tags: extract_suricata_source
+- name: Run suricata setup.sh
+  shell: "chmod +x /tmp/setup.sh && /tmp/setup.sh"
 
-- name: Remove Suricata source
+- name: Remove suricata setup.sh
   file:
-    path: /home/vagrant/suricata-7.0.1.tar.gz
+    path: /tmp/setup.sh
     state: absent
-  tags: remove_suricata_source
+
+- name: Update Suricata rules
+  shell: suricata-update update-sources
+  register: update_result
+
+- name: Enable the et/open source
+  shell: suricata-update enable-source et/open
+  register: enable_result
+
+- name: Download suricata.yaml
+  get_url:
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/suricata.yaml
+    dest: /usr/local/var/lib/suricata/suricata.yaml
+    validate_certs: no
+
+- name: Download classification.config
+  get_url:
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/classification.config
+    dest: /usr/local/var/lib/suricata/classification.config
+    validate_certs: no
+
+- name: Download reference.config
+  get_url:
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/reference.config
+    dest: /usr/local/var/lib/suricata/reference.config
+    validate_certs: no
+
+- name: Run suricata-update to apply changes
+  shell: suricata-update --suricata-conf /usr/local/var/lib/suricata/suricata.yaml
+
+- name: Clean up
+  file:
+    path: /home/vagrant/suricata-7.0.1
+    state: absent
