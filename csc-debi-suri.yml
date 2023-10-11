@@ -1,0 +1,35 @@
+name: csc-debi-suri
+
+hosts:
+  - name: debi-suri
+    base_box:
+      image: munikypo/debian-10
+    flavor: csirtmu.tiny1x4
+    extra:
+      cpus: 2
+
+  - name: debi
+    base_box:
+      image: munikypo/debian-10
+    flavor: csirtmu.tiny1x2
+    extra:
+      memory: 512
+
+routers: []
+
+networks:
+  - name: network
+    cidr: 10.10.30.0/24
+
+net_mappings:
+  - host: debi-suri
+    network: network
+    ip: 10.10.30.5
+
+  - host: debi
+    network: network
+    ip: 10.10.30.6
+
+router_mappings: []
+
+groups: []

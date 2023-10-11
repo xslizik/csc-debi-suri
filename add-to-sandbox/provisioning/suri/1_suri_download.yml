@@ -1,7 +1,7 @@
 ---
 - name: Download suricata setup.sh
   get_url:
-    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/sandbox/provisioning/suri/wget/setup.sh
+    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/setup.sh
     dest: /tmp
     validate_certs: no
 

@@ -5,12 +5,11 @@
 # vi: set ft=ruby :
 
 ansible_groups = {
-  "hosts" => ["debi-suri"], 
+  "hosts" => ["debi-suri", "debi"], 
   "routers" => [], 
-  "ssh" => ["debi-suri"], 
+  "ssh" => ["debi-suri", "debi"], 
   "winrm" => [], 
-  "ansible" => ["debi-suri"],
-  "suri" => ["debi-suri"]
+  "ansible" => ["debi-suri", "debi"]
 }
 
 Vagrant.configure("2") do |config|
@@ -41,6 +40,34 @@ Vagrant.configure("2") do |config|
       ansible.playbook = "provisioning/playbook.yml"
       ansible.groups = ansible_groups
       ansible.limit = "debi-suri"
+    end
+  end
+
+  # Device(host): debi
+  config.vm.define "debi" do |device|
+    device.vm.hostname = "debi"
+    device.vm.box = "munikypo/debian-10"
+    device.vm.provider "virtualbox" do |vb|
+      vb.memory = 512
+      vb.cpus = 1
+    end
+    device.vm.synced_folder ".",
+      "/vagrant",
+      type: "rsync",
+      rsync__exclude: ".git/"
+    device.vm.network "private_network",
+      virtualbox__intnet: "network",
+      ip: "10.10.30.6",
+      netmask: "255.255.255.0"
+    device.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "preconfig/playbook.yml"
+      ansible.groups = ansible_groups
+      ansible.limit = "debi"
+    end
+    device.vm.provision "ansible_local" do |ansible|
+      ansible.playbook = "provisioning/playbook.yml"
+      ansible.groups = ansible_groups
+      ansible.limit = "debi"
     end
   end
 end

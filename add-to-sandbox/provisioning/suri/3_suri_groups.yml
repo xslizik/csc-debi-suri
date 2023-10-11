@@ -27,16 +27,16 @@
 - name: Set directory permissions for Suricata
   file:
     path: "/usr/local/var/lib/suricata/"
-    mode: "0755"
+    mode: "0775"
 
 - name: Set directory permissions for Suricata Rules
   file:
-    path: "/usr/var/lib/suricata/rules/"
+    path: "/usr/local/var/lib/suricata/rules"
     mode: "0775"
 
 - name: Set directory permissions for Suricata Update
   file:
-    path: "/usr/var/lib/suricata/update/"
+    path: "/usr/local/var/lib/suricata/update"
     mode: "0775"
 
 - name: Add vagrant to suricata group
