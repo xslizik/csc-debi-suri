@@ -1,0 +1,17 @@
+check usermod for 
+
+/usr/local/var/lib/suricata/ 
+/usr/var/lib/suricata/rules/
+/usr/var/lib/suricata/update/
+
+create /tmp/suricata and add permissions
+/tmp/suricata
+
+
+suricata.yaml
+- my.rules
+unix-command:
+  enabled: false
+
+enp0s3 internet
+enp0s8 local network
