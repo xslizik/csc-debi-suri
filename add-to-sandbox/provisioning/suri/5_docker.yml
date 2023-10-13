@@ -12,11 +12,10 @@
     mode: '0755'
     validate_certs: no
 
-- name: Unarchive a file that is already on the remote machine
-  ansible.builtin.unarchive:
-    src: /root/DVWA.zip
-    dest: /root
-    remote_src: yes
+- name: Unzip DVWA.zip
+  command: unzip /root/DVWA.zip
+  args:
+    chdir: /root
 
 - name: Remove DVWA.zip
   ansible.builtin.file:
