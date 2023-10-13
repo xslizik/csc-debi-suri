@@ -3,6 +3,19 @@
     name: suricata
     state: present
 
+- name: Create directory /tmp/suricata
+  file:
+    path: /tmp/suricata
+    state: directory
+    mode: 0755
+
+- name: Change group owner for /tmp/suricata
+  file:
+    path: /tmp/suricata
+    owner: root
+    group: suricata
+    recurse: yes
+
 - name: Change group owner for /usr/local/var/lib/suricata/
   file:
     path: "/usr/local/var/lib/suricata/"

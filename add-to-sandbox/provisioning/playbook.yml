@@ -3,9 +3,6 @@
   hosts: debi-suri
   become: yes
   tasks:
-    - name: Add Suricata excercises 
-      include_tasks: ./suri/5_docker.yml
-
     - name: Install packages
       include_tasks: ./suri/0_suri_packages.yml
 
@@ -21,3 +18,5 @@
     - name: Add Suricata excercises
       include_tasks: ./suri/4_suri_excercises.yml
     
+    - name: Set up docker
+      include_tasks: ./suri/5_docker.yml

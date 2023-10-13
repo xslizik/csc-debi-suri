@@ -5,11 +5,11 @@
 # vi: set ft=ruby :
 
 ansible_groups = {
-  "hosts" => ["debi-suri", "debi"], 
+  "hosts" => ["debi-suri", "kali"], 
   "routers" => [], 
-  "ssh" => ["debi-suri", "debi"], 
+  "ssh" => ["debi-suri", "kali"], 
   "winrm" => [], 
-  "ansible" => ["debi-suri", "debi"]
+  "ansible" => ["debi-suri", "kali"]
 }
 
 Vagrant.configure("2") do |config|
@@ -44,8 +44,8 @@ Vagrant.configure("2") do |config|
   end
 
   # Device(host): debi
-  config.vm.define "debi" do |device|
-    device.vm.hostname = "debi"
+  config.vm.define "kali" do |device|
+    device.vm.hostname = "kali"
     device.vm.box = "munikypo/debian-10"
     device.vm.provider "virtualbox" do |vb|
       vb.memory = 512
@@ -62,12 +62,12 @@ Vagrant.configure("2") do |config|
     device.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "preconfig/playbook.yml"
       ansible.groups = ansible_groups
-      ansible.limit = "debi"
+      ansible.limit = "kali"
     end
     device.vm.provision "ansible_local" do |ansible|
       ansible.playbook = "provisioning/playbook.yml"
       ansible.groups = ansible_groups
-      ansible.limit = "debi"
+      ansible.limit = "kali"
     end
   end
 end

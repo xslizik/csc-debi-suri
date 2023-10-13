@@ -8,12 +8,12 @@ hosts:
     extra:
       cpus: 2
 
-  - name: debi
+  - name: kali
     base_box:
-      image: munikypo/debian-10
+      image: munikypo/kali-2020.4
     flavor: csirtmu.tiny1x2
     extra:
-      memory: 512
+      cpus: 2
 
 routers: []
 
@@ -26,7 +26,7 @@ net_mappings:
     network: network
     ip: 10.10.30.5
 
-  - host: debi
+  - host: kali
     network: network
     ip: 10.10.30.6
 
