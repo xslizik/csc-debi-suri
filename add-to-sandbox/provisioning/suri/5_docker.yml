@@ -1,0 +1,31 @@
+- name: Download docker.sh
+  get_url:
+    url: https://github.com/xslizik/csc-debi-suri/raw/main/wget/docker.sh
+    dest: /root/docker.sh
+    mode: '0755'
+    validate_certs: no
+
+- name: Download DVWA.zip
+  get_url:
+    url: https://github.com/xslizik/csc-debi-suri/raw/main/wget/DVWA.zip
+    dest: /root/DVWA.zip
+    mode: '0755'
+    validate_certs: no
+
+- name: Unzip DVWA.zip
+  command: unzip /root/DVWA.zip
+  args:
+    chdir: /root
+
+- name: Remove DVWA.zip
+  ansible.builtin.file:
+    path: /root/DVWA.zip
+    state: absent
+
+- name: Run docker.sh
+  shell: "/root/docker.sh"
+
+- name: Remove docker.sh
+  ansible.builtin.file:
+    path: /root/docker.sh
+    state: absent
