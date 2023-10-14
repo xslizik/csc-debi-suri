@@ -12,11 +12,13 @@ manage-sandbox build -vvv
 - use 10.10.30.5:80 to access DVWA
 - use 10.10.30.5:5636 to access evebox
 
-```
+### 🔑 SSH into Debi Suri
+### From Kali
+```bash
 ssh vagrant@10.10.30.5 
 ```
 
-### 🔑 SSH into Debi Suri
+### From your machine
 ```bash
 ssh -p 2222 -L 127.0.0.1:8080:10.10.30.5:5636 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=ERROR -o IdentitiesOnly=yes -i ~/.vagrant.d/insecure_private_key vagrant@127.0.0.1
 ```
@@ -29,8 +31,8 @@ ssh -p 2222 -L 127.0.0.1:8080:10.10.30.5:5636 -o UserKnownHostsFile=/dev/null -o
 
 ### Live Capture
 ```bash
-suricata -c /usr/local/var/lib/suricata/suricata.yaml -k all -l /tmp/suricata/ -i enp0s8
-evebox server -v -D /home/vagrant/evebox_db --datastore sqlite --input /tmp/suricata/eve.json --host 10.10.30.5
+sudo suricata -c /usr/local/var/lib/suricata/suricata.yaml -k all -l /tmp/suricata/ -i enp0s8
+evebox server -v -D /home/vagrant/live_db --datastore sqlite --input /tmp/suricata/eve.json --host 10.10.30.5
 ```
 
 ### 🧹 Cleanup
@@ -48,7 +50,7 @@ vagrant destroy
 https://gitlab.ics.muni.cz/muni-kypo-csc/cyber-sandbox-creator
 ```
 
-### Vulnerable box used 
+### 🔒 ulnerable box used from
 ```
 https://github.com/digininja/DVWA
 ```
