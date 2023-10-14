@@ -50,7 +50,7 @@ vagrant destroy
 https://gitlab.ics.muni.cz/muni-kypo-csc/cyber-sandbox-creator
 ```
 
-### 🔒 ulnerable box used from
+### 🔒 Vulnerable box used from
 ```
 https://github.com/digininja/DVWA
 ```
