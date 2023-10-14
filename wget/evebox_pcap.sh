@@ -3,7 +3,7 @@
 LOG_LOCATION="/tmp/suricata/"
 CONFIG_FILE="/usr/local/var/lib/suricata/suricata.yaml"
 PCAP_FILE="$1"
-HOST_IP="127.0.0.1"
+HOST_IP="10.10.30.5"
 
 if [ ! -f "$PCAP_FILE" ]; then
     echo "The file '$PCAP_FILE' does not seem to exist. Please supply a valid pcap file."

@@ -18,9 +18,9 @@
     mode: '0775'
     recurse: yes
 
-- name: Create directory /home/vagrant/evebox_db and set owner and group
+- name: Create directory /home/vagrant/live_db and set owner and group
   file:
-    path: /home/vagrant/evebox_db
+    path: /home/vagrant/live_db
     state: directory
     owner: root
     group: suricata

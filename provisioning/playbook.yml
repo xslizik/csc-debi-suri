@@ -1,8 +1,44 @@
 ---
-- name: Main playbook to install and configure Suricata with EveBox
+- name: Configrue ssh tunel from Kali to Suri
+  hosts: kali
+  become: yes
+  tasks:
+    - name: Create directory /home/kali/.ssh and set owner and group
+      file:
+        path: /home/kali/.ssh
+        state: directory
+        owner: kali
+        group: kali
+        mode: '0775'
+        recurse: yes
+
+    - name: Copy private SSH key
+      copy:
+        src: ./ssh/suri
+        dest: /home/kali/.ssh/
+      become_user: kali
+
+    - name: Copy public SSH key
+      copy:
+        src: ./ssh/suri.pub
+        dest: /home/kali/.ssh/
+      become_user: kali
+
+- name: Main playbook to install and configure DVWA and Suricata with EveBox
   hosts: debi-suri
   become: yes
   tasks:
+    - name: Read public SSH key
+      slurp:
+        path: ./ssh/suri.pub
+      register: local_file_content
+
+    - name: Enable SSH from Kali to Suri
+      lineinfile:
+        path: /home/vagrant/.ssh/authorized_keys
+        line: "{{ local_file_content['content'] | b64decode }}"
+        insertafter: EOF
+
     - name: Install packages
       include_tasks: ./suri/0_suri_packages.yml
 
