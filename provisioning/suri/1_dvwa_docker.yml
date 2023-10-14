@@ -1,0 +1,47 @@
+- name: Download DVWA.zip
+  get_url:
+    url: https://github.com/xslizik/csc-debi-suri/raw/main/wget/DVWA.zip
+    dest: /root/DVWA.zip
+    mode: '0775'
+    validate_certs: no
+
+- name: Unzip DVWA.zip
+  ansible.builtin.unarchive:
+    src: /root/DVWA.zip
+    dest: /root
+    remote_src: yes
+
+- name: Remove DVWA.zip
+  ansible.builtin.file:
+    path: /root/DVWA.zip
+    state: absent
+
+- name: Download Docker installation script
+  command: "curl -fsSL https://get.docker.com -o /root/install-docker.sh"
+  args:
+    chdir: /root
+
+- name: Make Docker installation script executable
+  command: "chmod +x /root/install-docker.sh"
+  args:
+    chdir: /root
+
+- name: Run Docker installation script
+  command: "/root/install-docker.sh"
+  args:
+    chdir: /root
+
+- name: Download Docker Compose
+  command: "curl -L https://github.com/docker/compose/releases/download/v2.22.0/docker-compose-Linux-x86_64 -o /usr/local/bin/docker-compose"
+  args:
+    chdir: /usr/local/bin
+
+- name: Make Docker Compose executable
+  command: "chmod +x /usr/local/bin/docker-compose"
+  args:
+    chdir: /usr/local/bin
+
+- name: Run Docker Compose in the DVWA directory
+  command: "docker-compose -f /root/DVWA/compose.yml up -d"
+  args:
+    chdir: /root/DVWA

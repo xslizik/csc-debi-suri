@@ -15,7 +15,7 @@ suricata-version: "7.0"
 vars:
   # more specific is better for alert accuracy and performance
   address-groups:
-    HOME_NET: "[192.168.0.0/16,10.0.0.0/8,172.16.0.0/12]"
+    HOME_NET: "[10.10.30.5]"
     #HOME_NET: "[192.168.0.0/16]"
     #HOME_NET: "[10.0.0.0/8]"
     #HOME_NET: "[172.16.0.0/12]"
@@ -612,7 +612,7 @@ logging:
 
 # Linux high speed capture support
 af-packet:
-  - interface: enp0s3
+  - interface: enp0s8
     # Number of receive threads. "auto" uses the number of cores
     #threads: auto
     # Default clusterid. AF_PACKET will load balance packets based on flow.
@@ -1285,7 +1285,7 @@ host-mode: auto
 # activated in live capture mode. You can use the filename variable to set
 # the file name of the socket.
 unix-command:
-  enabled: auto
+  enabled: false
   #filename: custom.socket
 
 # Magic file. The extension .mgc is added to the value here.
@@ -2152,7 +2152,7 @@ rule-files:
 
 classification-file: /usr/local/var/lib/suricata/classification.config
 reference-config-file: /usr/local/var/lib/suricata/reference.config
-# threshold-file: /usr/local/etc/suricata/threshold.config
+threshold-file: /usr/local/var/lib/suricata/threshold.config
 
 ##
 ## Include other configs

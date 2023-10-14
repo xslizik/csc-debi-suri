@@ -6,17 +6,18 @@
     - name: Install packages
       include_tasks: ./suri/0_suri_packages.yml
 
+    - name: Set up DVWA docker
+      include_tasks: ./suri/1_dvwa_docker.yml
+
     - name: Add Suricata
-      include_tasks: ./suri/1_suri_download.yml
+      include_tasks: ./suri/2_suri_download.yml
 
     - name: Add EveBox
-      include_tasks: ./suri/2_suri_eve.yml
+      include_tasks: ./suri/3_evebox_download.yml
 
     - name: Set proper Suricata permissions
-      include_tasks: ./suri/3_suri_groups.yml
+      include_tasks: ./suri/4_suri_groups.yml
 
     - name: Add Suricata excercises
-      include_tasks: ./suri/4_suri_excercises.yml
+      include_tasks: ./suri/5_suri_excercises.yml
     
-    - name: Set up docker
-      include_tasks: ./suri/5_docker.yml

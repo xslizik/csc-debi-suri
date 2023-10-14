@@ -3,25 +3,27 @@
 create-sandbox .\csc-debi-suri.yml
 cd .\sandbox
 ```
-### 📦 Don't Forget to Add Custom Vagrantfile and Provisioning
+### 📦 Don't Forget to Add Custom Provisioning
 ```bash
-manage-sandbox build
+manage-sandbox build -vvv
 ```
 
-### 🔑 SSH into Machines
-#### debi-suri
+### 🔑 SSH into Debi Suri
 ```bash
 ssh -p 2222 -L 127.0.0.1:8080:127.0.0.1:5636 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=ERROR -o IdentitiesOnly=yes -i ~/.vagrant.d/insecure_private_key vagrant@127.0.0.1
 ```
-#### debi
-```bash
-ssh -p 2200 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=ERROR -o IdentitiesOnly=yes -i ~/.vagrant.d/insecure_private_key vagrant@127.0.0.1
-```
+### 🐉 To access DVWA on Kali use browser 10.10.30.5
 
 ### 🏃‍♂️ Run Modes
+### PCAP inspection
 ```bash
-suricata -c /usr/local/var/lib/suricata/suricata.yaml -k none -l /tmp/suricata/
-./evebox_pcap.sh 2023-01-Unit42-Wireshark-quiz.pcap
+/home/vagrant/evebox_pcap.sh 2023-01-Unit42-Wireshark-quiz.pcap
+```
+
+### Live Capture
+```bash
+suricata -c /usr/local/var/lib/suricata/suricata.yaml -k all -l /tmp/suricata/
+evebox server -v -D /home/vagrant/evebox_db --datastore sqlite --input /tmp/suricata/eve.json
 ```
 
 ### 🧹 Cleanup
@@ -29,11 +31,8 @@ suricata -c /usr/local/var/lib/suricata/suricata.yaml -k none -l /tmp/suricata/
 manage-sandbox destroy
 ```
 
-### 🐛 For Debug Use 
+### 🐛 Reset in case of error with 
 ```bash
-vagrant up
-vagrant provisioning
-vagrant reload
 vagrant destroy
 ```
 

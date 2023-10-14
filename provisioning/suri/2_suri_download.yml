@@ -27,22 +27,25 @@
     dest: /usr/local/var/lib/suricata/suricata.yaml
     validate_certs: no
 
-- name: Download classification.config
-  get_url:
-    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/classification.config
+- name: Copy classification.config
+  copy:
+    src: /home/vagrant/suricata-7.0.1/etc/classification.config
     dest: /usr/local/var/lib/suricata/classification.config
-    validate_certs: no
 
-- name: Download reference.config
-  get_url:
-    url: https://raw.githubusercontent.com/xslizik/csc-debi-suri/main/wget/reference.config
+- name: Copy reference.config
+  copy:
+    src: /home/vagrant/suricata-7.0.1/etc/reference.config
     dest: /usr/local/var/lib/suricata/reference.config
-    validate_certs: no
+
+- name: Copy threshold.config
+  copy:
+    src: /home/vagrant/suricata-7.0.1/threshold.config
+    dest: /usr/local/var/lib/suricata/threshold.config
 
 - name: Run suricata-update to apply changes
   shell: suricata-update --suricata-conf /usr/local/var/lib/suricata/suricata.yaml
 
-- name: Clean up
+- name: Clean up suricata
   file:
     path: /home/vagrant/suricata-7.0.1
     state: absent
