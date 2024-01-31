@@ -15,21 +15,37 @@ hosts:
     extra:
       cpus: 2
 
-routers: []
+routers:
+  - name: router
+    base_box:
+      image: munikypo/debian-10
+    flavor: csirtmu.tiny1x4
+    extra:
+      memory: 512
 
 networks:
-  - name: network
+  - name: debi-suri-switch
+    cidr: 10.10.20.0/24
+
+  - name: kali-switch
     cidr: 10.10.30.0/24
 
 net_mappings:
   - host: debi-suri
-    network: network
-    ip: 10.10.30.5
+    network: debi-suri-switch
+    ip: 10.10.20.5
 
   - host: kali
-    network: network
-    ip: 10.10.30.6
+    network: kali-switch
+    ip: 10.10.30.5
 
-router_mappings: []
+router_mappings:
+  - router: router
+    network: debi-suri-switch
+    ip: 10.10.20.1
+
+  - router: router
+    network: kali-switch
+    ip: 10.10.30.1
 
 groups: []

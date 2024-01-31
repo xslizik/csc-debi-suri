@@ -1,38 +1,35 @@
 ### 🚀 Initial Setup
+#### To get started quickly, you can utilize the provided build script for an easy sandbox setup.
+#### If the boot time exceeds the limit on your machine, adjust the timeout in the Vagrant file:
 ```bash
-create-sandbox .\csc-debi-suri.yml
-cd .\sandbox
-```
-### 📦 Don't Forget to Add Custom Provisioning
-```bash
-manage-sandbox build -vvv
+device.vm.boot_timeout = 99999
 ```
 
 ### 🐉 Kali  
-- use 10.10.30.5:80 to access DVWA
-- use 10.10.30.5:5636 to access evebox
+- use 10.10.20.5:80 to access DVWA
+- use 10.10.20.5:5636 to access evebox
 
 ### 🔑 SSH into Debi Suri
 ### From Kali
 ```bash
-ssh vagrant@10.10.30.5 
+ssh vagrant@10.10.20.5 
 ```
 
 ### From your machine
 ```bash
-ssh -p 2222 -L 127.0.0.1:8080:10.10.30.5:5636 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=ERROR -o IdentitiesOnly=yes -i ~/.vagrant.d/insecure_private_key vagrant@127.0.0.1
+ssh -p 2200 -L 127.0.0.1:5636:10.10.20.5:5636 -L 127.0.0.1:80:10.10.20.5:80 -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -o LogLevel=ERROR -o IdentitiesOnly=yes -i ~/.vagrant.d/insecure_private_key vagrant@127.0.0.1
 ```
 
-### 🏃‍♂️ Run Modes
+### 🏃‍♂️ Suricata Run Modes
 ### PCAP inspection
 ```bash
-/home/vagrant/evebox_pcap.sh 2023-01-Unit42-Wireshark-quiz.pcap
+/home/vagrant/pcap_suri.sh capture.pcap
 ```
 
 ### Live Capture
 ```bash
-sudo suricata -c /usr/local/var/lib/suricata/suricata.yaml -k all -l /tmp/suricata/ -i enp0s8
-evebox server -v -D /home/vagrant/live_db --datastore sqlite --input /tmp/suricata/eve.json --host 10.10.30.5
+/home/vagrant/live_suri.sh
+evebox server -v -D /home/vagrant/live_db --datastore sqlite --input /tmp/suricata/ --host 10.10.20.5
 ```
 
 ### 🧹 Cleanup

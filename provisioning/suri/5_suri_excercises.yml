@@ -1,23 +1,14 @@
----
-- name: Download evebox_pcap.sh
-  get_url:
-    url: https://github.com/xslizik/csc-debi-suri/raw/main/wget/evebox_pcap.sh
-    dest: /home/vagrant/evebox_pcap.sh
-    mode: '0755'
-    validate_certs: no
+- name: Copy Excercises
+  copy:
+    src: transfer/excercises
+    dest: /home/vagrant/
 
-- name: Download PCAP file
-  get_url:
-    url: https://github.com/pan-unit42/Wireshark-quizzes/raw/main/2023-01-Unit42-Wireshark-quiz.pcap.zip
-    dest: /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
-    validate_certs: no
+- name: Run dynamic_flags.py
+  command:
+    cmd:  "python /home/vagrant/excercises/dynamic_flags.py {{ first_flag }} {{ second_flag }}"
+    chdir: /home/vagrant/excercises/
 
-- name: Unzip PCAP file with password
-  command: unzip -P infected /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
-  args:
-    chdir: /home/vagrant
-  
-- name: Remove PCAP zip
+- name: Remove dynamic_flags.py 
   ansible.builtin.file:
-    path: /home/vagrant/2023-01-Unit42-Wireshark-quiz.pcap.zip
+    path: /home/vagrant/excercises/dynamic_flags.py
     state: absent

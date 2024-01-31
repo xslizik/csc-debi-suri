@@ -1,0 +1,47 @@
+- name: Create suricata group
+  group:
+    name: suricata
+    state: present
+    
+- name: Copy files to /home/vagrant
+  copy:
+    src: transfer/scripts/{{ item }}
+    dest: /home/vagrant
+    mode: "0775"
+    group: "suricata"
+  with_items:
+    - pcap_suri.sh
+    - interface_suri.sh
+    - setup.sh
+    
+- name: Run Suricata setup.sh
+  command:
+    cmd: "/home/vagrant/setup.sh"
+
+- name: Remove suricata setup.sh
+  file:
+    path: /home/vagrant/setup.sh
+    state: absent
+
+- name: Update Suricata rules
+  shell: suricata-update update-sources
+  register: update_result
+
+- name: Copy suricata.yaml
+  copy:
+    src: transfer/suricata.yaml
+    dest: /usr/local/var/lib/suricata/suricata.yaml
+
+- name: Copy files to /usr/local/var/lib/suricata
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: '/opt/suricata-7.0.1/etc/classification.config', dest: '/usr/local/var/lib/suricata/classification.config' }
+    - { src: '/opt/suricata-7.0.1/etc/reference.config', dest: '/usr/local/var/lib/suricata/reference.config' }
+    - { src: '/opt/suricata-7.0.1/threshold.config', dest: '/usr/local/var/lib/suricata/threshold.config' }
+
+- name: Clean up suricata
+  file:
+    path: /opt/suricata-7.0.1
+    state: absent
