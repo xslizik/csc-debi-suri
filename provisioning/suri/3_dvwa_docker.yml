@@ -4,13 +4,13 @@
     dest: /root
 
 - name: Unzip DVWA.zip
-  ansible.builtin.unarchive:
+  unarchive:
     src: /root/DVWA.zip
     dest: /root
     remote_src: yes
 
 - name: Remove DVWA.zip
-  ansible.builtin.file:
+  file:
     path: /root/DVWA.zip
     state: absent
 
@@ -18,7 +18,7 @@
   get_url:
     url: https://get.docker.com
     dest: /root/install-docker.sh
-    mode: '0755'
+    mode: "0755"
 
 - name: Run the Docker installation script
   command:
@@ -35,7 +35,7 @@
   get_url:
     url: https://github.com/docker/compose/releases/download/v2.22.0/docker-compose-Linux-x86_64
     dest: /usr/local/bin/docker-compose
-    mode: '0755'
+    mode: "0755"
 
 - name: Run Docker Compose in DVWA directory
   command:

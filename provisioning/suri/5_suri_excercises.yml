@@ -9,6 +9,6 @@
     chdir: /home/vagrant/excercises/
 
 - name: Remove dynamic_flags.py 
-  ansible.builtin.file:
+  file:
     path: /home/vagrant/excercises/dynamic_flags.py
     state: absent

@@ -8,5 +8,7 @@ echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> -a /etc/profile
 export PATH="$HOME/.cargo/bin:$PATH"
 
 cd /opt/suricata-7.0.1
-./configure && make && make install
+./configure --enable-nfqueue --sysconfdir=/etc --enable-unix-socket 
+make 
+make install
 ldconfig

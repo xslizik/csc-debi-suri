@@ -1,29 +1,47 @@
-- name: Add vagrant to suricata group
-  user:
-    name: vagrant
-    groups: suricata
-    append: yes
+- name: Copy files to /etc/suricata
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: suricata
+    mode: "0660"
+  with_items:
+    - { src: 'transfer/suricata.yaml', dest: '/etc/suricata/suricata.yaml' }
+    - { src: '/opt/suricata-7.0.1/etc/classification.config', dest: '/etc/suricata/classification.config' }
+    - { src: '/opt/suricata-7.0.1/etc/reference.config', dest: '/etc/suricata/reference.config' }
+    - { src: '/opt/suricata-7.0.1/threshold.config', dest: '/etc/suricata/threshold.config' }
+  
+- name: Create Suricata log directory
+  file:
+    owner: root
+    group: suricata
+    mode: "0770"
+    path: /etc/suricata/log
+    state: directory
+
+- name: Create Suricata live_db directory
+  file:
+    owner: root
+    group: suricata
+    mode: "0770"
+    path: /etc/suricata/live_db
+    state: directory
+
+- name: Add Suricata systemd functionality
+  copy:
+    src: transfer/suricata.service
+    dest: /etc/systemd/system/suricata.service
+    mode: "0660"
+    group: "suricata"
 
 - name: Change group owner and set directory permissions for Suricata
   file:
-    path: /usr/local/var/lib/suricata
+    path: /etc/suricata
     owner: root
     group: suricata
-    mode: '0775'
-    recurse: yes
+    mode: "0770"
 
-- name: Change group owner and set directory permissions for Suricata Rules
+- name: Clean up suricata
   file:
-    path: /usr/var/lib/suricata/rules
-    owner: root
-    group: suricata
-    mode: '0775'
-    recurse: yes
-
-- name: Change group owner and set directory permissions for Suricata Update
-  file:
-    path: /usr/var/lib/suricata/update/
-    owner: root
-    group: suricata
-    mode: '0775'
-    recurse: yes
+    path: /opt/suricata-7.0.1
+    state: absent

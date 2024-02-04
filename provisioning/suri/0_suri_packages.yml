@@ -23,6 +23,10 @@
     - liblz4-dev
     - libcap-ng-dev
     - python-pip
+    - libnetfilter-queue-dev
+    - libnetfilter-queue1
+    - libnfnetlink-dev
+    - libnfnetlink0
 
 - name: Install dpkt using pip
   pip:

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LOG_LOCATION="/tmp"
-CONFIG_FILE="/usr/local/var/lib/suricata/suricata.yaml"
+LOG_LOCATION="/etc/suricata/log"
+CONFIG_FILE="/etc/suricata/suricata.yaml"
 HOST_IP="10.10.20.5"
 PCAP_FILE="$1"
 
@@ -16,6 +16,6 @@ else
     rm -rf "$LOG_LOCATION"/*
 fi
 
-suricata -c "$CONFIG_FILE" -k none -l "$LOG_LOCATION" -r "$PCAP_FILE" --runmode=autofp
+sudo suricata -c $CONFIG_FILE -l $LOG_LOCATION/eve.json -r $PCAP_FILE --runmode=autofp
 
-evebox oneshot --host "$HOST_IP" "$LOG_LOCATION/eve.json"
+evebox oneshot --host $HOST_IP $LOG_LOCATION/eve.json
