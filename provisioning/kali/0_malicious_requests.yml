@@ -1,0 +1,26 @@
+- name: Copy files to home
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  with_items:
+    - { src: 'transfer/requests/dynamic_kali_flag.py', dest: '/home/kali/dynamic_kali_flag.py' }
+    - { src: 'transfer/requests/exploit_dvwa.py', dest: '/home/kali/exploit_dvwa.py' }
+
+- name: Run dynamic_kali_flag.py
+  command:
+    cmd:  python /home/kali/dynamic_kali_flag.py {{ requests_flag }}
+    chdir: /home/kali/
+
+- name: Remove dynamic_kali_flag.py
+  file:
+    path: /home/kali/dynamic_kali_flag.py
+    state: absent
+
+- name: Compile python file
+  command:
+    cmd: python -m py_compile /home/kali/exploit_dvwa.py
+
+- name: Remove requests.py
+  file:
+    path: /home/kali/exploit_dvwa.py
+    state: absent

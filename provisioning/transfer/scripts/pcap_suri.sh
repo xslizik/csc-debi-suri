@@ -16,6 +16,6 @@ else
     rm -rf "$LOG_LOCATION"/*
 fi
 
-sudo suricata -c $CONFIG_FILE -l $LOG_LOCATION/eve.json -r $PCAP_FILE --runmode=autofp
+sudo suricata -c $CONFIG_FILE -l $LOG_LOCATION -r $PCAP_FILE --runmode=autofp
 
 evebox oneshot --host $HOST_IP $LOG_LOCATION/eve.json

@@ -17,4 +17,4 @@ fi
 echo "To display logs in Evebox use"
 echo "evebox server -v -D $LIVE_DB --datastore sqlite --input $LOG_LOCATION/eve.json --host $HOST_IP"
 
-sudo suricata -c $CONFIG_FILE -l $LOG_LOCATION/eve.json -i $INTERFACE --runmode=workers
+sudo suricata -c $CONFIG_FILE -l $LOG_LOCATION -i $INTERFACE --runmode=workers

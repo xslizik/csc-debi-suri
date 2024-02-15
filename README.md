@@ -28,7 +28,7 @@ ssh -p 2200 -L 127.0.0.1:5636:10.10.20.5:5636 -L 127.0.0.1:80:10.10.20.5:80 -o U
 
 ### Live Capture
 ```bash
-/home/vagrant/live_suri.sh
+/home/vagrant/interface_suri.sh
 evebox server -v -D /etc/suricata/live_db --datastore sqlite --input /etc/suricata/log/eve.json --host 10.10.20.5
 ```
 

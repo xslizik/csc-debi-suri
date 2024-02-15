@@ -2,7 +2,7 @@
 Description=Suricata Intrusion Detection Service
 After=network.target syslog.target
 [Service] 
-ExecStart=/usr/local/bin/suricata -q 0 -vvv --runmode=workers
+ExecStart=/usr/local/bin/suricata -q 0 -c /etc/suricata/suricata.yaml -l /etc/suricata/log -v
 ExecReload=/bin/kill -HUP $MAINPID
 ExecStop=/bin/kill $MAINPID
 [Install]

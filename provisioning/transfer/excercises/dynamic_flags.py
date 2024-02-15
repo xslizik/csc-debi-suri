@@ -1,9 +1,7 @@
 import sys
 import dpkt
 
-# python dynamic.py 1000001 3Fo76#PTf4P$Im!9mkLso69e=FFF
-
-EXCERCISE_ONE = './suspicious/captured_eve.json'
+EXCERCISE_ONE = './encrypted/ja3_fingerprints.rules'
 EXCERCISE_TWO = './investigate/agent_tesla.pcap'
 
 def replace_string_in_packet(packet, start_index, end_index, replacement_string):
@@ -39,8 +37,8 @@ def main():
         new_signature_id = sys.argv[1]
         replacement_string = sys.argv[2]
 
-    one(new_signature_id)
-    two(replacement_string)
+        one(new_signature_id)
+        two(replacement_string)
 
 if __name__ == '__main__':
     main() 

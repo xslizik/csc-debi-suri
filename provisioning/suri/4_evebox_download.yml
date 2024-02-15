@@ -12,3 +12,27 @@
   apt:
     name: evebox
     state: present
+    
+- name: Allow UDP traffic on port 53
+  command: iptables -A INPUT -p udp -m udp --dport 53 -j ACCEPT
+
+- name: Allow TCP traffic on port 53
+  command: iptables -A INPUT -p tcp -m tcp --dport 53 -j ACCEPT
+
+- name: Allow TCP traffic on port 22
+  command: iptables -A INPUT -p tcp -m tcp --dport 22 -j ACCEPT
+
+- name: Allow icmp traffic
+  command: iptables -A INPUT -p icmp -j ACCEPT
+
+- name: Accept traffic on the loopback interface
+  command: iptables -A INPUT -i lo -j ACCEPT
+
+- name: Accept established and related connections
+  command: iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+- name: Drop all other traffic
+  command: iptables -A INPUT -j DROP
+
+- name: Allow TCP traffic on port 5646
+  command: iptables -A INPUT -p tcp -m tcp --dport 5646 -j ACCEPT

@@ -1,9 +1,9 @@
 ---
-- name: Main playbook to install and configure DVWA and Suricata with EveBox
+- name: Install and configure DVWA, Suricata, EveBox
   hosts: debi-suri
   become: yes
   vars_files:
-    - ./suri/hosts_vars
+    - ./suri/suri_vars
   tasks:
     - name: Install packages
       include_tasks: ./suri/0_suri_packages.yml
@@ -23,3 +23,11 @@
     - name: Add Suricata excercises
       include_tasks: ./suri/5_suri_excercises.yml
     
+- name: Set up malicious DVWA requests script
+  hosts: kali
+  become: yes
+  vars_files:
+    - ./kali/kali_vars
+  tasks:
+    - name: Prepare environment
+      include_tasks: ./kali/0_malicious_requests.yml

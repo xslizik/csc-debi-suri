@@ -11,6 +11,6 @@ alert tls any any -> any any (msg:"SSLBL: Malicious JA3 SSL-Client Fingerprint d
 alert tls any any -> any any (msg:"SSLBL: Malicious JA3 SSL-Client Fingerprint detected (Tofsee)"; ja3_hash; content:"7c410ce832e848a3321432c9a82e972b"; sid:906200009; rev:1;)
 alert tls any any -> any any (msg:"SSLBL: Malicious JA3 SSL-Client Fingerprint detected (Tofsee)"; ja3_hash; content:"96eba628dcb2b47607192ba74a3b55ba"; sid:906200010; rev:1;)
 alert tls any any -> any any (msg:"SSLBL: Malicious JA3 SSL-Client Fingerprint detected (Adware)"; ja3_hash; content:"9c2589e1c0e9f533a022c6205f9719e1"; sid:906200011; rev:1;)
-alert tls any any -> any any (msg:"SSLBL: Malicious JA3 SSL-Client Fingerprint detected (Trickbot)"; ja3.hash; content:""; sid:906200016; rev:1;)
+alert tls any any -> any any (msg:"SSLBL: Malicious JA3 SSL-Client Fingerprint detected (Trickbot)"; ja3.hash; content:""; sid:$; rev:1;)
 alert tls any any -> any any (msg:"SSLBL: Malicious JA3 SSL-Client Fingerprint detected (BitRAT)"; ja3_hash; content:"8515076cbbca9dce33151b798f782456"; sid:906200095; rev:1;)
 alert tls any any -> any any (msg:"SSLBL: Malicious JA3 SSL-Client Fingerprint detected (AsyncRAT)"; ja3_hash; content:"fc54e0d16d9764783542f0146a98b300"; sid:906200096; rev:1;)
