@@ -7,7 +7,8 @@ device.vm.boot_timeout = 99999
 
 ### 🐉 Kali  
 - use 10.10.20.5:80 to access DVWA
-- use 10.10.20.5:5636 to access evebox
+- use 10.10.20.5:5636 to access Evebox
+- use localhost:8080 to access Malicious Flag Checker API
 
 ### 🔑 SSH into Debi Suri
 ### From Kali

@@ -1,26 +1,61 @@
+- name: Change password for user 'kali'
+  ansible.builtin.user:
+    name: kali
+    password: "{{ 'owo' | password_hash('sha512') }}"
+
+- name: Add user 'student'
+  ansible.builtin.user:
+    name: student
+    password: "{{ 'student' | password_hash('sha512') }}"
+    create_home: yes
+    shell: /bin/zsh
+
+- name: Create /usr/local/lib/lua directory
+  ansible.builtin.file:
+    path: /usr/local/lib/lua
+    state: directory
+    mode: '0755'
+
+- name: Create /usr/local/lib/lua/5.2 directory
+  ansible.builtin.file:
+    path: /usr/local/lib/lua/5.2
+    state: directory
+    mode: '0755'
+
 - name: Copy files to home
-  copy:
+  ansible.builtin.copy:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
-  with_items:
-    - { src: 'transfer/requests/dynamic_kali_flag.py', dest: '/home/kali/dynamic_kali_flag.py' }
-    - { src: 'transfer/requests/exploit_dvwa.py', dest: '/home/kali/exploit_dvwa.py' }
+  loop:
+    - { src: 'transfer/requests/templates', dest: '/root' }
+    - { src: 'transfer/requests/protect_flags.py', dest: '/root/protect_flags.py' }
+    - { src: 'transfer/requests/protect_flags.service', dest: '/etc/systemd/system/protect_flags.service' }
+    - { src: 'transfer/wireshark/ja3.lua', dest: '/usr/lib/x86_64-linux-gnu/wireshark/plugins/ja3.lua'}
+    - { src: 'transfer/wireshark/md5.lua', dest: '/usr/local/lib/lua/5.2/md5.lua'}
 
-- name: Run dynamic_kali_flag.py
-  command:
-    cmd:  python /home/kali/dynamic_kali_flag.py {{ requests_flag }}
-    chdir: /home/kali/
+- name: Add dynamic flag protect_flags.py 1
+  ansible.builtin.replace:
+    path: /root/protect_flags.py
+    regexp: '$FLAG1'
+    replace: '{{ third_flag }}'
 
-- name: Remove dynamic_kali_flag.py
-  file:
-    path: /home/kali/dynamic_kali_flag.py
-    state: absent
+- name: Add dynamic flag protect_flags.py 2
+  ansible.builtin.replace:
+    path: /root/protect_flags.py
+    regexp: '$FLAG2'
+    replace: '{{ fourth_flag }}'
 
-- name: Compile python file
-  command:
-    cmd: python -m py_compile /home/kali/exploit_dvwa.py
+- name: Add dynamic flag protect_flags.py 3
+  ansible.builtin.replace:
+    path: /root/protect_flags.py
+    regexp: '$FLAG3'
+    replace: '{{ fifth_flag }}'
 
-- name: Remove requests.py
-  file:
-    path: /home/kali/exploit_dvwa.py
-    state: absent
+- name: Reload system daemon
+  command: "systemctl daemon-reload"
+
+- name: Enable protect_flags service
+  command: "systemctl enable protect_flags.service"
+
+- name: Start protect_flags service
+  command: "systemctl start protect_flags.service"

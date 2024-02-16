@@ -3,6 +3,7 @@ import dpkt
 
 EXCERCISE_ONE = './encrypted/ja3_fingerprints.rules'
 EXCERCISE_TWO = './investigate/agent_tesla.pcap'
+EXCERCISE_THREE = './encrypted/trickbot.pcap'
 
 def replace_string_in_packet(packet, start_index, end_index, replacement_string):
     modified_packet = bytearray(packet)
@@ -28,6 +29,21 @@ def two(replacement_string):
     packets[668] = (packets[668][0], new)
 
     with open(EXCERCISE_TWO, 'wb') as f:
+        pcap_writer = dpkt.pcap.Writer(f)
+        for timestamp, buf in packets:
+            pcap_writer.writepkt(buf, timestamp)
+
+def three(replacement_string):
+    with open(EXCERCISE_THREE, 'rb') as f:
+        pcap = dpkt.pcap.Reader(f)
+        packets = list(pcap)
+
+    packet_to_modify = packets[95][1]
+    new = replace_string_in_packet(packet_to_modify, 100, 104, replacement_string)
+
+    packets[95] = (packets[95][0], new)
+
+    with open(EXCERCISE_THREE, 'wb') as f:
         pcap_writer = dpkt.pcap.Writer(f)
         for timestamp, buf in packets:
             pcap_writer.writepkt(buf, timestamp)
