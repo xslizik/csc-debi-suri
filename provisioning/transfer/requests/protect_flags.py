@@ -35,7 +35,7 @@ def exploit_sql_injection(payload="1' OR '1'='1"):
     }
 
     if send_request(url, method, headers, params=params) == None:
-        return "$FLAG1"
+        return "$FLAG3"
     else:
         return None
 
@@ -63,7 +63,7 @@ def exploit_login(username="admin", password="password"):
     }
 
     if send_request(url, method, headers, params=params) == None:
-        return "$FLAG2"
+        return "$FLAG4"
     else:
         return None
 
@@ -85,7 +85,7 @@ def exploit_reflected_xss(payload="<script> alert(\"uwu\"); </script>"):
     }
 
     if send_request(url, method, headers, params=params) == None:   
-        return "$FLAG3"
+        return "$FLAG5"
     else:
         return None
 
@@ -97,33 +97,33 @@ def index():
 @app.route('/sql', methods = ['POST'])
 def sql():
     if exploit_sql_injection(payload="1"):
-        return render_template('result.html', result="nieco sa pokazilo")
+        return render_template('result.html', result="make sure DVWA is working properly")
     
     response = exploit_sql_injection()
     if response == None:
-        return render_template('result.html', result="pravidlo nefunguje")
+        return render_template('result.html', result="rule does not work")
     else:
         return render_template('result.html', result=response)
     
 @app.route('/login', methods = ['POST'])
 def login():
     if exploit_login(username="uwu"):
-        return render_template('result.html', result="nieco sa pokazilo")
+        return render_template('result.html', result="make sure DVWA is working properly")
     
     response = exploit_login()
     if response == None:
-        return render_template('result.html', result="pravidlo nefunguje")
+        return render_template('result.html', result="rule does not work")
     else:
         return render_template('result.html', result=response)
 
 @app.route('/xss', methods = ['POST'])
 def xss():
     if exploit_reflected_xss(payload="owo"):
-        return render_template('result.html', result="nieco sa pokazilo")
+        return render_template('result.html', result="make sure DVWA is working properly")
     
     response = exploit_reflected_xss()
     if response == None:
-        return render_template('result.html', result="pravidlo nefunguje")
+        return render_template('result.html', result="rule does not work")
     else:
         return render_template('result.html', result=response)
 

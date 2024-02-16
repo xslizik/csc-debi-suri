@@ -29,5 +29,8 @@
   vars_files:
     - ./kali/kali_vars
   tasks:
+    - name: Set up user accounts
+      include_tasks: ./kali/0_kali_users.yml
+    
     - name: Prepare environment
-      include_tasks: ./kali/0_malicious_requests.yml
+      include_tasks: ./kali/1_malicious_requests.yml

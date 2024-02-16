@@ -1,25 +1,16 @@
 import sys
 import dpkt
 
-EXCERCISE_ONE = './encrypted/ja3_fingerprints.rules'
-EXCERCISE_TWO = './investigate/agent_tesla.pcap'
-EXCERCISE_THREE = './encrypted/trickbot.pcap'
+INVESTIGATE_PCAP = './investigate/investigate.pcap'
+TRICKBOT_PCAP = './encrypted/trickbot.pcap'
 
 def replace_string_in_packet(packet, start_index, end_index, replacement_string):
     modified_packet = bytearray(packet)
     modified_packet[start_index:end_index] = replacement_string.encode()
     return bytes(modified_packet)
 
-def one(new_signature_id):
-    with open(EXCERCISE_ONE, "r+") as f:
-        contents = f.read()
-        new_contents = contents.replace("$", new_signature_id)
-        f.seek(0)
-        f.write(new_contents)
-        f.truncate()
-
-def two(replacement_string):
-    with open(EXCERCISE_TWO, 'rb') as f:
+def flag_one(replacement_string):
+    with open(INVESTIGATE_PCAP, 'rb') as f:
         pcap = dpkt.pcap.Reader(f)
         packets = list(pcap)
 
@@ -28,13 +19,13 @@ def two(replacement_string):
 
     packets[668] = (packets[668][0], new)
 
-    with open(EXCERCISE_TWO, 'wb') as f:
+    with open(INVESTIGATE_PCAP, 'wb') as f:
         pcap_writer = dpkt.pcap.Writer(f)
         for timestamp, buf in packets:
             pcap_writer.writepkt(buf, timestamp)
 
-def three(replacement_string):
-    with open(EXCERCISE_THREE, 'rb') as f:
+def flag_two(replacement_string):
+    with open(TRICKBOT_PCAP, 'rb') as f:
         pcap = dpkt.pcap.Reader(f)
         packets = list(pcap)
 
@@ -43,18 +34,15 @@ def three(replacement_string):
 
     packets[95] = (packets[95][0], new)
 
-    with open(EXCERCISE_THREE, 'wb') as f:
+    with open(TRICKBOT_PCAP, 'wb') as f:
         pcap_writer = dpkt.pcap.Writer(f)
         for timestamp, buf in packets:
             pcap_writer.writepkt(buf, timestamp)
 
 def main():
     if len(sys.argv) > 2:
-        new_signature_id = sys.argv[1]
-        replacement_string = sys.argv[2]
-
-        one(new_signature_id)
-        two(replacement_string)
+        flag_one(sys.argv[1])
+        flag_two(sys.argv[2])
 
 if __name__ == '__main__':
     main() 

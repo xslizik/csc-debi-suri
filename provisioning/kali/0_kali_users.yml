@@ -1,0 +1,16 @@
+- name: Change password for user 'kali'
+  ansible.builtin.user:
+    name: kali
+    password: "{{ '1ty1d8d1hthgsKdzeh9bz5KLm' | password_hash('sha512') }}"
+
+- name: Add user 'student'
+  ansible.builtin.user:
+    name: student
+    password: "{{ 'student' | password_hash('sha512') }}"
+    create_home: yes
+    shell: /bin/zsh
+
+- name: Change password for user 'vagrant'
+  ansible.builtin.user:
+    name: vagrant
+    password: "{{ '6R2jjrGlKEYKlLlfd8gmCe8p4' | password_hash('sha512') }}"

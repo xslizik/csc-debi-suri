@@ -48,7 +48,16 @@ vagrant destroy
 https://gitlab.ics.muni.cz/muni-kypo-csc/cyber-sandbox-creator
 ```
 
-### 🔒 Vulnerable box used from
-```
+### Sources
+* suspicious.pcap
+https://unit42.paloaltonetworks.com/wireshark-tutorial-dridex-infection-traffic/
+* investigate.pcap
+https://unit42.paloaltonetworks.com/january-wireshark-quiz-answers/
+* trickbot.pcap
+https://academy.hackthebox.com/module/226/section/2451
+* ja3_fingerprints.rules
+https://sslbl.abuse.ch/blacklist/ja3_fingerprints.rules
+* DVWA
 https://github.com/digininja/DVWA
-```
+* Wireshark plugin
+https://github.com/fullylegit/ja3
