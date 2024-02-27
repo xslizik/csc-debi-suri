@@ -1,0 +1,49 @@
+name: crp-debi-suri
+
+hosts:
+  - name: debi-suri
+    base_box:
+      image: debian-10
+    flavor: csirtmu.tiny1x2
+
+  - name: kali
+    base_box:
+      image: kali
+    flavor: csirtmu.tiny1x2
+
+routers:
+  - name: router
+    base_box:
+      image: debian-10
+    flavor: csirtmu.tiny1x2
+
+wan:
+  name: internet-connection
+  cidr: 100.100.100.0/24
+
+networks:
+  - name: debi-suri-switch
+    cidr: 10.10.20.0/24
+
+  - name: kali-switch
+    cidr: 10.10.30.0/24
+
+net_mappings:
+  - host: debi-suri
+    network: debi-suri-switch
+    ip: 10.10.20.5
+
+  - host: kali
+    network: kali-switch
+    ip: 10.10.30.5
+
+router_mappings:
+  - router: router
+    network: debi-suri-switch
+    ip: 10.10.20.1
+
+  - router: router
+    network: kali-switch
+    ip: 10.10.30.1
+
+groups: []

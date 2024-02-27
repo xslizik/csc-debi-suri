@@ -1,27 +1,25 @@
-name: csc-debi-suri
+name: csc-topology
 
 hosts:
   - name: debi-suri
     base_box:
       image: munikypo/debian-10
-    flavor: csirtmu.tiny1x4
-    extra:
-      cpus: 2
+    flavor: csirtmu.tiny1x2
 
   - name: kali
     base_box:
       image: munikypo/kali-2020.4
     flavor: csirtmu.tiny1x2
-    extra:
-      cpus: 2
 
 routers:
   - name: router
     base_box:
       image: munikypo/debian-10
-    flavor: csirtmu.tiny1x4
-    extra:
-      memory: 512
+    flavor: csirtmu.tiny1x2
+
+wan:
+  name: internet-connection
+  cidr: 100.100.100.0/24
 
 networks:
   - name: debi-suri-switch
