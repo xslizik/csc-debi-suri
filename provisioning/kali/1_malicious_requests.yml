@@ -17,27 +17,13 @@
   loop:
     - { src: 'transfer/requests/templates', dest: '/root' }
     - { src: 'transfer/requests/protect_flags.py', dest: '/root/protect_flags.py' }
+    - { src: 'transfer/requests/replace.sh', dest: '/root/replace.sh' }
     - { src: 'transfer/requests/protect_flags.service', dest: '/etc/systemd/system/protect_flags.service' }
     - { src: 'transfer/wireshark/ja3.lua', dest: '/usr/lib/x86_64-linux-gnu/wireshark/plugins/ja3.lua'}
     - { src: 'transfer/wireshark/md5.lua', dest: '/usr/local/lib/lua/5.2/md5.lua'}
 
-- name: Add dynamic flag protect_flags.py 1
-  ansible.builtin.replace:
-    path: /root/protect_flags.py
-    regexp: '$FLAG3'
-    replace: '{{ third_flag }}'
-
-- name: Add dynamic flag protect_flags.py 2
-  ansible.builtin.replace:
-    path: /root/protect_flags.py
-    regexp: '$FLAG4'
-    replace: '{{ fourth_flag }}'
-
-- name: Add dynamic flag protect_flags.py 3
-  ansible.builtin.replace:
-    path: /root/protect_flags.py
-    regexp: '$FLAG5'
-    replace: '{{ fifth_flag }}'
+- name: Add dynamic flag protect_flags.py
+  command: "bash /root/replace.sh /root/protect_flags.py {{ third_flag }} {{ fourth_flag }} {{ fifth_flag }}"
 
 - name: Reload system daemon
   command: "systemctl daemon-reload"

