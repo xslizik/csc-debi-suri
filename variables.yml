@@ -1,0 +1,19 @@
+first_flag:
+  type: password
+  length: 28
+
+second_flag:
+  type: password
+  length: 10
+
+third_flag:
+  type: password
+  length: 28
+
+fourth_flag:
+  type: password
+  length: 28
+
+fifth_flag:
+  type: password
+  length: 28

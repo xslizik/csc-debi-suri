@@ -7,9 +7,9 @@
     mode: "0660"
   with_items:
     - { src: 'transfer/suricata.yaml', dest: '/etc/suricata/suricata.yaml' }
-    - { src: '/opt/suricata-7.0.1/etc/classification.config', dest: '/etc/suricata/classification.config' }
-    - { src: '/opt/suricata-7.0.1/etc/reference.config', dest: '/etc/suricata/reference.config' }
-    - { src: '/opt/suricata-7.0.1/threshold.config', dest: '/etc/suricata/threshold.config' }
+    - { src: 'transfer/classification.config', dest: '/etc/suricata/classification.config' }
+    - { src: 'transfer/reference.config', dest: '/etc/suricata/reference.config' }
+    - { src: 'transfer/threshold.config', dest: '/etc/suricata/threshold.config' }
   
 - name: Create Suricata log directory
   file:

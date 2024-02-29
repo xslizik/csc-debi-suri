@@ -1,14 +1,14 @@
 - name: Copy Excercises
   copy:
     src: transfer/excercises
-    dest: /home/vagrant/
+    dest: /home/monitor/
 
 - name: Run dynamic_flags.py
   command:
-    cmd:  "python /home/vagrant/excercises/dynamic_flags.py {{ first_flag }} {{ second_flag }}"
-    chdir: /home/vagrant/excercises/
+    cmd:  "python3 /home/monitor/excercises/dynamic_flags.py {{ first_flag }} {{ second_flag }}"
+    chdir: /home/monitor/excercises/
 
 - name: Remove dynamic_flags.py 
   file:
-    path: /home/vagrant/excercises/dynamic_flags.py
+    path: /home/monitor/excercises/dynamic_flags.py
     state: absent

@@ -1,18 +1,27 @@
+- name: Create user monitor
+  user:
+    state: present
+    name: monitor
+    password: "{{ 'monitor' | password_hash('sha512') }}"
+    groups: sudo
+    createhome: yes
+    shell: /bin/bash
+
 - name: Create suricata group
   group:
     name: suricata
     state: present
 
-- name: Add vagrant to suricata group
+- name: Add monitor to suricata group
   user:
-    name: vagrant
+    name: monitor
     groups: suricata
     append: yes
     
-- name: Copy files to /home/vagrant
+- name: Copy files to /home/monitor
   copy:
     src: transfer/scripts/{{ item }}
-    dest: /home/vagrant
+    dest: /home/monitor
     mode: "0770"
     group: "suricata"
   with_items:
@@ -22,11 +31,11 @@
     
 - name: Run Suricata setup.sh
   command:
-    cmd: "/home/vagrant/setup.sh"
+    cmd: "/home/monitor/setup.sh"
 
 - name: Remove suricata setup.sh
   file:
-    path: /home/vagrant/setup.sh
+    path: /home/monitor/setup.sh
     state: absent
 
 - name: Update Suricata rules

@@ -27,6 +27,7 @@
     - libnetfilter-queue1
     - libnfnetlink-dev
     - libnfnetlink0
+    - vim
 
 - name: Install dpkt using pip
   pip:
